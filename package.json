@@ -1,0 +1,24 @@
+{
+  "name": "odin-battleship",
+  "version": "1.0.0",
+  "description": "Simple battleship game made for the odin course. Live Link: https://sbingley22.github.io/odin-battleship",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
