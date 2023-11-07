@@ -6,13 +6,9 @@ export default class Ship {
     this.squares = squares;
   }
 
-  hit(missile) {
-    this.squares.forEach((square) => {
-      if (square === missile) {
-        this.hits += 1;
-        this.isSunk();
-      }
-    });
+  hit() {
+    this.hits += 1;
+    this.isSunk();
   }
 
   isSunk() {

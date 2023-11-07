@@ -11,7 +11,7 @@ export default class Gameboard {
 
     for (const key in this.ships) {
       const ship = this.ships[key];
-      if (ship.sunk == false) shipsLeft += 1;
+      if (ship.sunk === false) shipsLeft += 1;
     }
 
     return shipsLeft;
@@ -26,10 +26,20 @@ export default class Gameboard {
       return "miss";
     } else {
       const shipName = this.board[attack];
-      this.ships[shipName].hit(attack);
+      console.log(shipName);
+      this.ships[shipName].hit();
       this.board[attack] = "hit";
       return shipName;
     }
+  }
+
+  hoverPlacement(startSquare, length, horizontal) {
+    const squares = this.canPlaceShip(startSquare, length, horizontal);
+    if (squares == false) return false;
+
+    if (this.isShipBlocking(squares)) return false;
+
+    return squares;
   }
 
   placeShip(name, startSquare, length, horizontal) {

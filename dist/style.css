@@ -7,3 +7,41 @@ html,
 body {
   background-color: rgb(22, 22, 22);
 }
+
+input {
+  background-color: rgb(33, 33, 33);
+}
+
+.square {
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  border: 1px solid black;
+}
+.square.green {
+  background-color: green;
+}
+.square.red {
+  background-color: red;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  margin: 20px;
+}
+
+#info {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  font-size: larger;
+  margin: 20px;
+  padding: 20px;
+}
+
+#new-game {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}

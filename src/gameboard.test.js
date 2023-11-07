@@ -1,6 +1,10 @@
 import Gameboard from "./gameboard";
 
-const gameboard = new Gameboard();
+let gameboard;
+
+beforeEach(() => {
+  gameboard = new Gameboard();
+});
 
 describe("test ship placement", () => {
   it("tests horizontal placement as false", () => {
@@ -77,7 +81,7 @@ describe("sunken ships", () => {
   it("returns 1 ship left", () => {
     gameboard.receiveAttack(1);
     gameboard.receiveAttack(2);
-    gameboard.receiveAttack(3);
+    gameboard.receiveAttack(6);
     gameboard.receiveAttack(4);
     gameboard.receiveAttack(5);
     expect(gameboard.shipsRemaining()).toBe(0);
