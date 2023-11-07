@@ -7,7 +7,22 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="content"></div>
+    <div id="content">
+      <div id="info">Place your scout</div>
+      <div id="new-game">
+        <form>
+          <label for="name"> Name: </label>
+          <input type="text" name="name" id="name" />
+        </form>
+        <div id="board-placer"></div>
+      </div>
+      <div id="game">
+        <div id="boards-container">
+          <div id="board1"></div>
+          <div id="board2"></div>
+        </div>
+      </div>
+    </div>
     <script src="./main.js"></script>
   </body>
 </html>
