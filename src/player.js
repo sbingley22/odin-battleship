@@ -20,7 +20,7 @@ export default class Player {
 
     let shipsRemaining = this.gameboard.shipsRemaining();
     if (shipsRemaining <= 0) {
-      console.log(this.name + " loses!");
+      return this.name + " loses!";
     }
 
     if (turn === true && this.name === "ai") {
@@ -44,9 +44,16 @@ export default class Player {
 
     //next players turn
     this.setTurn(false);
-    player.setTurn(true);
+    player.setTurn(true, this);
 
     return moveState;
+  }
+
+  aiSetShips() {
+    this.placeShip("boat", 0, 2, true);
+    this.placeShip("scout", 4, 3, true);
+    this.placeShip("cruiser", 9, 5, false);
+    this.placeShip("battleship", 58, 4, true);
   }
 
   aiMove(player) {

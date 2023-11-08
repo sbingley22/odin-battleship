@@ -26,7 +26,6 @@ export default class Gameboard {
       return "miss";
     } else {
       const shipName = this.board[attack];
-      console.log(shipName);
       this.ships[shipName].hit();
       this.board[attack] = "hit";
       return shipName;

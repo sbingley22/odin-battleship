@@ -47,7 +47,7 @@ const clearPlacementBoard = () => {
   }
 };
 
-const makeBoard = (callsign) => {
+const makeBoard = (callsign, placer = false, clickable = false) => {
   const div = document.createElement("div");
   div.classList.add("board");
   for (let i = 0; i < 8 * 8; i++) {
@@ -58,22 +58,46 @@ const makeBoard = (callsign) => {
 
     div.appendChild(square);
 
-    square.addEventListener("mouseover", function () {
-      placeHover(square.id);
-    });
-    square.addEventListener("click", function () {
-      if (placeHover(square.id)) {
-        player1.placeShip(shipTypes[0][0], i, shipTypes[0][1], horizontal);
+    if (placer) {
+      //Add specific eventlisteners for placer board
+      square.addEventListener("mouseover", function () {
+        placeHover(square.id);
+      });
+      square.addEventListener("click", function () {
+        if (placeHover(square.id)) {
+          player1.placeShip(shipTypes[0][0], i, shipTypes[0][1], horizontal);
 
-        shipTypes.shift();
-        if (shipTypes.length <= 0) {
-          startGame();
-        } else elements.info.textContent = "Place your " + shipTypes[0][0];
-      }
-    });
+          shipTypes.shift();
+          if (shipTypes.length <= 0) {
+            startGame();
+          } else elements.info.textContent = "Place your " + shipTypes[0][0];
+        }
+      });
+    } else if (clickable) {
+      //Add specific listeners for game board
+      square.addEventListener("click", function () {
+        const moveResult = player1.move(ai, i);
+        if (moveResult == "miss") elements.info.textContent = "Missile missed!";
+        else elements.info.textContent = "You hit a " + moveResult;
+
+        drawBoards("b1-", player1, true);
+        drawBoards("b2-", ai, false);
+
+        let shipsRemaining = player1.gameboard.shipsRemaining();
+        if (shipsRemaining <= 0) endGame(player1.name + " loses!");
+        shipsRemaining = ai.gameboard.shipsRemaining();
+        if (shipsRemaining <= 0) endGame(ai.name + " loses!");
+      });
+    }
   }
   return div;
 };
+
+function endGame(text) {
+  elements.info.textContent = text;
+  removeAllEventListenersFromChildren(elements.board1);
+  removeAllEventListenersFromChildren(elements.board2);
+}
 
 function removeAllEventListenersFromChildren(element) {
   const childNodes = element.childNodes;
@@ -116,11 +140,32 @@ const startGame = () => {
   player2Name.textContent = ai.name;
 
   //make boards
-  elements.board1.appendChild(makeBoard("b1-"));
-  elements.board2.appendChild(makeBoard("b2-"));
+  elements.board1.appendChild(makeBoard("b1-", false, false));
+  elements.board2.appendChild(makeBoard("b2-", false, true));
+
+  clearBoard("b1-", player1, true);
 };
 
-const drawBoards = (board, showShips) => {};
+const drawBoards = (callsign, player, showShips) => {
+  clearBoard(callsign, player, showShips);
+};
+
+const clearBoard = (callsign, player, showShips) => {
+  for (let i = 0; i < 8 * 8; i++) {
+    const square = document.querySelector("#" + callsign + i);
+    square.classList.remove("green");
+    square.classList.remove("red");
+    square.classList.remove("blue");
+    square.classList.remove("yellow");
+
+    if (player.gameboard.board[i] !== "") {
+      if (player.gameboard.board[i] == "hit") square.classList.add("red");
+      else if (player.gameboard.board[i] == "miss")
+        square.classList.add("green");
+      else if (showShips) square.classList.add("yellow");
+    }
+  }
+};
 
 const shipTypes = [
   ["scout", 2],
@@ -134,8 +179,9 @@ let gameLoop = false;
 
 const player1 = new Player("Player One");
 const ai = new Player("ai");
+ai.aiSetShips();
 
-elements.boardPlacer.appendChild(makeBoard("bp-"));
+elements.boardPlacer.appendChild(makeBoard("bp-", true));
 elements.horizontal.addEventListener("click", () => {
   if (horizontal) {
     horizontal = false;
