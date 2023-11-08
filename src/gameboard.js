@@ -71,8 +71,9 @@ export default class Gameboard {
     if (startSquare < 0 || startSquare > this.board.length) return false;
 
     if (horizontal) {
-      const mod = (startSquare + length - 1) % 8;
-      if (mod < length) return false;
+      const mod1 = startSquare % 8;
+      const mod2 = (startSquare + length - 1) % 8;
+      if (mod2 < mod1) return false;
 
       const squares = [];
       for (let i = 0; i < length; i++) {

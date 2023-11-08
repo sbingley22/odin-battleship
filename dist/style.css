@@ -12,6 +12,12 @@ input {
   background-color: rgb(33, 33, 33);
 }
 
+button {
+  background-color: rgb(33, 33, 33);
+  padding: 20px;
+  margin: 20px;
+}
+
 .square {
   width: 30px;
   height: 30px;
@@ -23,6 +29,9 @@ input {
 }
 .square.red {
   background-color: red;
+}
+.square.yellow {
+  background-color: yellow;
 }
 
 .board {
@@ -41,6 +50,12 @@ input {
 }
 
 #new-game {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+#boards-container {
   display: grid;
   justify-items: center;
   align-items: center;
